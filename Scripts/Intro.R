@@ -4,7 +4,7 @@ options(scipen = 999) #Desativar notação científica
 
 # Atribuição de variáveis
 a <- 10       # Usando o operador de atribuição "<-"
-b <- 5
+b <- 5        # Usando o operador de atribuição "=" (não recomendado para atribuições)
 
 # Operações aritméticas básicas
 soma <- a + b          # Soma
