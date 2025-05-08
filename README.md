@@ -1,4 +1,4 @@
-- 🌱 I’m currently working in R Tutorials, a book, and my next videos for my channel.
-- 📫 There is a Youtube Channel: https://www.youtube.com/@FernandoFerrariFernandes
-- 📫 My website: https://qualidadeprodutividade.com
-- 📋 This repository contains R scripts for the Youtube videos
+# 📚 Bem-vindo ao repositório do Canal Qualidade & Produtividade
+- 📋 Este repositório contém os scripts em R para os vídeos do meu canal no YouTube
+- 📫 Meu canal no Youtube: https://www.youtube.com/@FernandoFerrariFernandes
+- 📫 Meu website: https://qualidadeprodutividade.com
