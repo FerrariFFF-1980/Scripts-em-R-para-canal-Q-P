@@ -1,5 +1,7 @@
 # Introdução às operações básicas no R
 
+options(scipen = 999) #Desativar notação científica
+
 # Atribuição de variáveis
 a <- 10       # Usando o operador de atribuição "<-"
 b <- 5
