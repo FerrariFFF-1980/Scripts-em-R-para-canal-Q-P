@@ -11,7 +11,7 @@ soma <- a + b          # Soma
 subtracao <- a - b     # Subtração
 multiplicacao <- a * b # Multiplicação
 divisao <- a / b       # Divisão
-potencia <- a ^ b        # Potência
+potencia <- a ^ b      # Potência
 
 # Impressão dos resultados
 print(paste("Soma: ", soma))
