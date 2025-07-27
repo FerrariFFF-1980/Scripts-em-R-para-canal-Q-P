@@ -1,4 +1,4 @@
-
+# Script: Intro.R
 # Introdução às operações básicas no R
 
 options(scipen = 999) #Desativar notação científica
