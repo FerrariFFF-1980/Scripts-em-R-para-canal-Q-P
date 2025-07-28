@@ -12,6 +12,8 @@ int = 10L  # O "L" indica que é um inteiro
 # Lógicos
 logic = TRUE  # ou false
 
+class(char)  # Exibe a classe do objeto inteiro
+
 # Texto ou Strings
 char = "Qualidade e Produtividade"  # Texto
 
@@ -22,7 +24,7 @@ sexo = factor(c("Masculino", "Feminino"))  # Variável categórica
 data = as.Date("2025-07-27")  # Data no formato YYYY-MM-DD
 
 # Vetores
-vetor_num = c(1, 2, 3, 4, 5)  # Vetor numérico
+vetor_num = c(1, 2, 3, 4, 5)
 vetor_char = c("A", "B", "C")  # Vetor de caracteres
 
 str(vetor_num)  # Exibe a estrutura do vetor numérico)
@@ -30,8 +32,7 @@ str(vetor_char) # Exibe a estrutura do vetor de caracteres
 
 summary(vetor_num)  # Soma dos elementos do vetor numérico
 
-class(matriz)  # Exibe a classe do objeto matriz
-class(int)  # Exibe a classe do objeto inteiro
+class(vetor_num)  # Exibe a classe do objeto inteiro
 
 # Listas
 lista = list(
@@ -45,12 +46,13 @@ lista
 
 # Matrizes
 matriz = matrix(1:9, nrow = 3, ncol = 3)  # Matriz 3x3
+matriz = matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)  # Matriz 3x3
 matriz
 
 matriz[1, 2]  # Acessa o elemento na primeira linha e segunda coluna
 
 matriz[2, ]  # Acessa a segunda linha inteira
-matriz[, 1]  # Acessa a primeira coluna inteira
+matriz[, 2]  # Acessa a primeira coluna inteira
 
 # Data Frames
 df = data.frame(
