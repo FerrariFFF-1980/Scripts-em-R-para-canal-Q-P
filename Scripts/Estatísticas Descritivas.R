@@ -20,6 +20,7 @@ sd(PesoPeixes$PesoExtremo)
 # Coeficiente de Variação
 # Medida de dispersão relativa, em porcentagem, indica a variabilidade dos dados em relação à média
 cv <- (sd(PesoPeixes$Peso) / mean(PesoPeixes$Peso)) * 100
+cv_natural <- (sd(PesoPeixes$Peso) / mean(PesoPeixes$Peso))
 
 # Estatística Descritiva
 # Consolidado com várias estatísticas descritivas
@@ -27,3 +28,4 @@ cv <- (sd(PesoPeixes$Peso) / mean(PesoPeixes$Peso)) * 100
 # install.packages("DescTools")
 library(DescTools)
 Desc(PesoPeixes$Peso)
+
