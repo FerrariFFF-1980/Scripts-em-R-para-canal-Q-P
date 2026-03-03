@@ -7,25 +7,7 @@ dados <- data.frame(Dispersao, check.names = FALSE) # Transformar em data frame 
 # Criar o gráfico de dispersão
 ggplot(data = dados, aes(x = `Velocidade (m/min)`, y = `Rugosidade Ra (µm)`)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Adicionar linha de tendência 
-  labs(
-    title = "Gráfico de Dispersão",
-  ) +
-  theme_light()
-
-# Criar o gráfico de dispersão
-ggplot(data = dados, aes(x = `Umidade (%)`, y = `Consumo (kWh)`)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Adicionar linha de tendência 
-  labs(
-    title = "Gráfico de Dispersão",
-  ) +
-  theme_light()
-
-# Criar o gráfico de dispersão
-ggplot(data = dados, aes(x = `Temperatura (°C)`, y = `Resistência (MPa)`)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Adicionar linha de tendência 
+  geom_smooth(method = "lm", se = TRUE, color = "red") +  # Adicionar linha de tendência 
   labs(
     title = "Gráfico de Dispersão",
   ) +
