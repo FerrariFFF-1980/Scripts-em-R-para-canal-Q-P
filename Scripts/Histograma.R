@@ -1,6 +1,5 @@
 # Histogramas no R
 library(ggplot2)                     # Carrega o pacote ggplot2 para visualização de dados
-library(viridis)                     # Carrega o pacote viridis para paletas de cores)
 
 dados <- data.frame(PesoPeixes$Peso) # Cria um data frame com a variável Peso
 
