@@ -3,6 +3,37 @@
 # Pacote ggplot2
 library(ggplot2)
 
+# Barras simples
+ggplot(falhas_pcb, aes(x = Shift, fill = Shift)) +
+  
+  geom_bar(color = "white") +
+  
+  geom_text(
+    stat = "count",
+    aes(
+      y = after_stat(count),
+      label = after_stat(count)
+    ),
+    vjust = -0.4,
+    size = 5,
+    color = "black"
+  ) +
+  
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  
+  labs(
+    title = "Falhas por Turno",
+    x = "Turno",
+    y = "Frequência",
+    fill = "Turno"
+  ) +
+  
+  scale_fill_brewer(palette = "Set2") +
+  theme_light(base_size = 16) +
+  theme(legend.position = "right")
+# coord_flip()  # se quiser em barras horizontais
+
+
 # Barras empilhadas
 ggplot(falhas_pcb, aes(x = Shift, fill = Line)) +
   
@@ -26,7 +57,7 @@ ggplot(falhas_pcb, aes(x = Shift, fill = Line)) +
   scale_fill_brewer(palette = "Set2") +
   theme_light(base_size = 16) +
   theme(legend.position = "right")
-  coord_flip()  # se quiser em barras horizontais
+# coord_flip()  # se quiser em barras horizontais
 
 
 # Barras lado a lado
