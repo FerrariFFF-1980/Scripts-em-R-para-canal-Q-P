@@ -92,3 +92,4 @@ ggplot(falhas_pcb, aes(x = 2, fill = Shift)) +
   
   # Posição da legenda
   theme(legend.position = "right")
+
