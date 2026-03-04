@@ -14,6 +14,16 @@ ggplot(dados, aes(x = dados$Peso)) +       # Cria o gráfico usando o pacote ggp
     fill = "#FF44FF",             # Cor de preenchimento das barras
     color = "black",                 # Cor da borda das barras
   ) +
+  
+# opcional: adição de contagem de frequência em cada barra do histograma 
+#     geom_text(
+#     stat = "bin",
+#     bins = 8,
+#     aes(label = after_stat(count),
+#         y = after_stat(density)),
+#     vjust = -0.2,
+#     size = 5
+#   ) +
 
   stat_function(                                  # Adiciona a curva normal ao gráfico
   fun = dnorm,                                    # Função de densidade normal
@@ -30,4 +40,5 @@ ggplot(dados, aes(x = dados$Peso)) +       # Cria o gráfico usando o pacote ggp
     y = "Densidade"                                 # Rótulo do eixo y
   ) +
   
-  theme_light(base_size = 24)                       # Aplica tema claro com tamanho de fonte base de 16
+  theme_light(base_size = 16)                       # Aplica tema claro com tamanho de fonte base de 16
+
