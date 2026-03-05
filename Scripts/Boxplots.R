@@ -1,3 +1,7 @@
+############
+# Boxplots #
+############
+
 library(ggplot2)
 library(tidyverse)
 
@@ -27,6 +31,14 @@ CentrosUsinagem %>%
     )
   ) +
   
+  # Opcional - linhas dos limites de especificação
+  # geom_hline(
+  #   yintercept = c(25.05, 24.95), # Intervalo de especificação
+  #   linetype = "dashed",
+  #   linewidth = 0.5,
+  #   color = "#D55E00"
+  # ) +
+  
   # Opcional - adição de jitters
   # geom_jitter(
   #   color="black",
@@ -42,10 +54,9 @@ CentrosUsinagem %>%
   ) +
   
   labs (
-    title = "Distribuição dos Diâmetros do Eixos em mm",
+    title = "Distribuição dos Diâmetros do Eixos [mm]",
     subtitle = "por Centros de Usinagem"
   ) 
 
 # Opcional - girar 90°
 # coord_flip()
-
