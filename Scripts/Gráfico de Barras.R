@@ -1,10 +1,14 @@
-# Gráfico de Colunas e Barras
+###############################
+# Gráfico de Colunas e Barras #
+###############################
 
 # Pacote ggplot2
 library(ggplot2)
 
 # Barras simples
-ggplot(falhas_pcb, aes(x = Shift, fill = Shift)) +
+ggplot(
+  falhas_pcb,
+  aes(x = Shift, fill = Shift)) +
   
   geom_bar(color = "white") +
   
