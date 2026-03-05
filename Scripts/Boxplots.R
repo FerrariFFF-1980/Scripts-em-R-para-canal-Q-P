@@ -1,46 +1,51 @@
-############
-# Boxplots #
-############
-
-# Pacotes
+library(ggplot2)
 library(tidyverse)
-library(viridis)
 
-# Datasets
-data <- data.frame(
-  name=c(
-    rep("A",500),
-    rep("B",500),
-    rep("B",500),
-    rep("C",20),
-    rep('D', 100)
-  ),
-  value=c(
-    rnorm(500, 10, 5),
-    rnorm(500, 13, 1),
-    rnorm(500, 18, 1),
-    rnorm(20, 25, 4),
-    rnorm(100, 12, 1)
-  )
-)
-
-# Gráfico
-data %>%
+# Plot
+CentrosUsinagem %>%
   ggplot(
-    aes(x=name,
-        y=value,
-        fill=name)) +
+    aes(
+      x=`Centro de Usinagem`,
+      y=`Diâmetro (mm)`,
+      fill=`Centro de Usinagem`
+    )
+  ) +
+  
   geom_boxplot() +
-  scale_fill_viridis(discrete = TRUE,
-                     alpha=0.6) +
-  geom_jitter(color="#808080",
-              size=0.3,
-              alpha=0.6,
-              width = 0.4) +
+  
+    # Escala Okabe-Ito
+    scale_fill_manual(
+    values = c(
+      "#0072B2",  # azul
+      "#E69F00",  # laranja
+      "#009E73"   # verde
+      # "#D55E00",  # vermelho
+      # "#CC79A7",  # roxo
+      # "#56B4E9",  # azul claro
+      # "#F0E442",  # amarelo
+      # "#000000"   # preto
+    )
+  ) +
+  
+  # Opcional - adição de jitters
+  # geom_jitter(
+  #   color="black",
+  #   size=0.4,
+  #   alpha=0.9
+  # ) +
+  
+  theme_light() +
+  
   theme(
-    legend.position="none",
+    legend.position="right",
     plot.title = element_text(size=16)
   ) +
-  ggtitle("A boxplot with jitter") +
-  theme_light() +
-  xlab("")
+  
+  labs (
+    title = "Distribuição dos Diâmetros do Eixos em mm",
+    subtitle = "por Centros de Usinagem"
+  ) 
+
+# Opcional - girar 90°
+# coord_flip()
+
