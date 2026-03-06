@@ -10,6 +10,10 @@ options(scipen = 999, digits = 6)
 library(ggplot2)
 library(car)
 library(rstatix)
+library(readxl)
+
+# Importa os dados se ainda nao estiverem presentes
+ANOVA <- read_excel("Dados/ANOVA.xlsx")
 
 # Paleta Okabe-Ito (colorblind safe)
 okabe_ito <- c(
@@ -40,16 +44,16 @@ ggplot(
     fill = CentroUsinagem
   )
 ) +
-  
+
   geom_boxplot(alpha = 0.8) +
-  
+
   geom_jitter(
     width = 0.08,
     size = 2,
     alpha = 0.2,
     color = "black"
   ) +
-  
+
   scale_fill_manual(values = okabe_ito) +
   labs(
     title = "Diâmetro por Centro de Usinagem",
@@ -83,23 +87,23 @@ ggplot(
     y = Residuos
   )
 ) +
-  
+
   geom_point(
     size = 3,
     color = okabe_ito[5]
   ) +
-  
+
   geom_hline(
     yintercept = 0,
     linetype = "dashed"
   ) +
-  
+
   labs(
     title = "Resíduos vs Valores Ajustados",
     x = "Valores Ajustados",
     y = "Resíduos"
   ) +
-  
+
   theme_light()
 
 # Gráfico QQ de normalidade usando ggplot
@@ -107,17 +111,17 @@ ggplot(
   data.frame(residuos),
   aes(sample = residuos)
 ) +
-  
+
   stat_qq(color = okabe_ito[6], size = 3) +
-  
+
   stat_qq_line(color = "black") +
-  
+
   labs(
     title = "Gráfico Q-Q dos Resíduos",
     x = "Quantis Teóricos",
     y = "Quantis Observados"
   ) +
-  
+
   theme_light()
 
 # Teste de normalidade
@@ -154,7 +158,7 @@ ggplot(
     fill = CentroUsinagem
   )
 ) +
-  
+
   stat_summary(
     fun = mean,
     geom = "point",
@@ -163,7 +167,7 @@ ggplot(
     stroke = 1.2,
     color = "black"
   ) +
-  
+
   stat_summary(
     fun.data = mean_cl_normal,
     geom = "errorbar",
@@ -171,15 +175,15 @@ ggplot(
     linewidth = 0.8,
     color = "black"
   ) +
-  
+
   scale_fill_manual(values = okabe_ito) +
-  
+
   labs(
     title = "Média do Diâmetro por Centro de Usinagem",
     x = "Centro de Usinagem",
     y = "Diâmetro médio (mm)"
   ) +
-  
+
   theme_light() +
-  
+
   theme(legend.position = "none")
