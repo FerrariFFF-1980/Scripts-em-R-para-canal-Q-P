@@ -9,7 +9,6 @@ options(scipen = 999)
 library(rstatix)
 library(ggplot2)
 
-
 # 1) TESTE t PARA UMA AMOSTRA
 # ==================================================
 # Pergunta:
@@ -24,7 +23,6 @@ t.test(
   conf.level = 0.95,
   alternative = "two.sided"
 )
-
 
 # Teste unilateral à direita
 # H0: mu <= 10
@@ -151,7 +149,7 @@ t.test(
 )
 
 # ==================================================
-# 6) VERIFICAÇÃO DE NORMALIDADE
+# 5) VERIFICAÇÃO DE NORMALIDADE
 # ==================================================
 
 #Teste por grupos
