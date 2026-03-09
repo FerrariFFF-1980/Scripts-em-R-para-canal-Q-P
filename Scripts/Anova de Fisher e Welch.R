@@ -11,6 +11,7 @@ library(ggplot2)
 library(car)
 library(rstatix)
 library(readxl)
+library(DescTools)
 
 # Importa os dados se ainda nao estiverem presentes
 ANOVA <- read_excel("Dados/ANOVA.xlsx")
@@ -131,9 +132,6 @@ shapiro.test(residuos)
 bartlett.test(Diametro_mm ~ CentroUsinagem, data = ANOVA)
 leveneTest(Diametro_mm ~ CentroUsinagem, data = ANOVA)
 
-# Pós-teste após ANOVA padrão
-TukeyHSD(modelo_anova)
-
 ###########################################################
 ### ANOVA de Welch (robusta para variâncias diferentes) ###
 ###########################################################
@@ -187,3 +185,31 @@ ggplot(
   theme_light() +
 
   theme(legend.position = "none")
+
+# Tukey HSD para comparar médias entre si
+TukeyHSD(
+  modelo_anova,
+  conf.level = 0.95  
+)
+
+# Bonferroni para comparações múltiplas
+pairwise_t_test(
+  data = ANOVA,
+  formula = Diametro_mm ~ CentroUsinagem,
+  p.adjust.method = "bonferroni",
+  conf.level = 0.95,
+  pool.sd = TRUE
+)
+
+# Dunnett para comparar todos os grupos contra um grupo de controle
+# O grupo de referência será o primeiro nível do fator.
+# Se quiser definir explicitamente o controle, use relevel antes.
+
+ANOVA$CentroUsinagem <- relevel(ANOVA$CentroUsinagem, ref = "Centro 1")
+
+DunnettTest(
+  x = ANOVA$Diametro_mm,
+  g = ANOVA$CentroUsinagem,
+  control = "Centro 1",
+  conf.level = 0.95
+)
