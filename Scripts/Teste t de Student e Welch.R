@@ -10,7 +10,7 @@ library(rstatix)
 library(ggplot2)
 
 # 1) TESTE t PARA UMA AMOSTRA
-# ==================================================
+# ============================
 # Pergunta:
 # A média do diâmetro é igual a 10 mm?
 
@@ -152,14 +152,10 @@ t.test(
 # 5) VERIFICAÇÃO DE NORMALIDADE
 # ==================================================
 
-#Teste por grupos
+# Teste por grupos
 teste_t %>%
   group_by(Centro_Usinagem) %>%
   shapiro_test(Diametro_mm)
-
-# Diferenças para o teste de Shapiro nas diferenças (para o teste pareado)
-diferencas <- teste_t$Antes_Ajuste - teste_t$Depois_Ajuste
-shapiro.test(diferencas)
 
 ggplot(teste_t, aes(sample = Diametro_mm)) +
   stat_qq() +
@@ -171,6 +167,10 @@ ggplot(teste_t, aes(sample = Diametro_mm)) +
     x = "Quantis Teoricos",
     y = "Quantis Observados"
   )
+
+# Diferenças para o teste de Shapiro-Wilk (para o teste pareado)
+diferencas <- teste_t$Antes_Ajuste - teste_t$Depois_Ajuste
+shapiro.test(diferencas)
 
 ggplot(teste_t,
        aes(sample = diferencas)) +
