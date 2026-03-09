@@ -1,5 +1,6 @@
-.Rproj.user/
-.Rproj
-.RData
+# R / RStudio
+*.RData
+*.Rproj
 .Rhistory
 .Rapp.history
+.Rproj.user/
