@@ -6,8 +6,8 @@
 options(scipen = 999, digits = 6)
 
 # Carrega os pacotes necessários
-library(car)
 library(EnvStats)
+library(car)
 
 # Garante que a coluna de grupos seja tratada como fator
 CentrosUsinagem$`Centro de Usinagem` <- as.factor(CentrosUsinagem$`Centro de Usinagem`)
@@ -36,7 +36,9 @@ var(centro_3)
 variancia_hipotetica <- 0.0004
 
 # Aplica o teste no Centro 1
-varTest(
+# Teste Chi-quadrado para Variancia
+# Exige normalidade dos dados
+varTest(    # do pacote EnvStats
   x = centro_1,
   sigma.squared = variancia_hipotetica,
   alternative = "two.sided",
@@ -53,6 +55,9 @@ varTest(
 # H1: sigma1^2 != sigma2^2
 
 # Exemplo: comparação entre Centro 1 e Centro 2
+# Teste F Clássico
+# Assume normalidade nas duas populações
+# Sensível a outliers de desvios da normalidade
 var.test(
   x = centro_1,
   y = centro_2,
@@ -64,6 +69,7 @@ var.test(
 ##############################
 # Objetivo:
 # Comparar a homogeneidade das variâncias entre 3 ou mais grupos
+# É mais robusto à não-normalidade.
 
 # Hipóteses:
 # H0: todas as variâncias são iguais
@@ -78,6 +84,8 @@ leveneTest(
 ##############################
 # Objetivo:
 # Comparar a homogeneidade das variâncias entre 3 ou mais grupos
+# Muito sensível à não-normalidade.
+# Ideal quando os dados são aproximadamente normais.
 
 # Hipóteses:
 # H0: todas as variâncias são iguais
