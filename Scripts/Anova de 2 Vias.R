@@ -1,6 +1,7 @@
-#################
-# TWO-WAY ANOVA #
-#################
+#################################
+# TWO-WAY ANOVA                 #  
+# Anova de 2 vias - ANOVA2.xlsx #
+#################################
 
 # Evita notação científica
 options(scipen = 999, digits = 6)
