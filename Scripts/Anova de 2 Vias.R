@@ -140,8 +140,6 @@ ggplot(
 
 # Teste de Normalidade dos Resíduos
 shapiro.test(residuos)
-AndersonDarlingTest(residuos, "pnorm")
-
 
 # Homoscedasticidade (Igualdade de Variâncias)
 leveneTest(
