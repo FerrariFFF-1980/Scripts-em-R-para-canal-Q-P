@@ -46,7 +46,7 @@ ggplot(
   )
 ) +
 
-  geom_boxplot(alpha = 0.8) +
+  geom_boxplot() +
 
   geom_jitter(
     width = 0.08,
@@ -65,7 +65,6 @@ ggplot(
   theme(
     legend.position = "none"
   )
-
 
 # Ajuste da ANOVA de Fisher
 modelo_anova <- aov(Diametro_mm ~ CentroUsinagem, data = ANOVA)
@@ -199,13 +198,11 @@ pairwise_t_test(
 
 # Dunnett para comparar todos os grupos contra um grupo de controle
 # O grupo de referência será o primeiro nível do fator.
-# Se quiser definir explicitamente o controle, use relevel antes.
-
-ANOVA$CentroUsinagem <- relevel(ANOVA$CentroUsinagem, ref = "Centro 1")
+ANOVA$CentroUsinagem <- relevel(ANOVA$CentroUsinagem, ref = "Centro 4")
 
 DunnettTest(
   x = ANOVA$Diametro_mm,
   g = ANOVA$CentroUsinagem,
-  control = "Centro 1",
+  control = "Centro 4",
   conf.level = 0.95
 )
