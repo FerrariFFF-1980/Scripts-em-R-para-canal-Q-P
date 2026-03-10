@@ -3,13 +3,17 @@
 ######################################################
 
 # Versao sem correção de continuidade
-# Use quando n < 30
+# Use quando amostras grandes
+# comparação de uma ou mais proporções
+# aproximação normal/qui-quadrado é válida
+
 prop.test(
   x = 18,
   n = 200,
   p = 0.10,
+  conf.level = 0.95,
   alternative = "two.sided",   # two.sided, less, greater
-  correct = FALSE              # remove correção de continuidade de Yates
+  correct = TRUE              # remove correção de continuidade de Yates
 )
 
 ########################################################
@@ -20,18 +24,28 @@ prop.test(
 prop.test(
   x = c(15, 30),
   n = c(200, 220),
+  conf.level = 0.95,
   alternative = "two.sided",
-  correct = FALSE
+  correct = TRUE
 )
 
 #################################
 # TESTE BINOMIAL EXATO          #
 #################################
 
+# Use quando a amostra é pequena
+# você quer um teste exato, sem aproximações
+# existe apenas uma proporção
+# os dados são sucessos vs falhas
+# n < 30 (regra prática)
+# n*p < 5 ou n * (1−p) < 5
+
 # Teste
-binom.test(
+prop.test(
   x = 3,
   n = 20,
   p = 0.10,
-  alternative = "two.sided"
+  conf.level = 0.95,
+  alternative = "two.sided",
+  correct = TRUE
 )
