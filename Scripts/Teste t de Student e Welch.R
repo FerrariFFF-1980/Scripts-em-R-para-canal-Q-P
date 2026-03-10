@@ -157,7 +157,9 @@ teste_t %>%
   group_by(Centro_Usinagem) %>%
   shapiro_test(Diametro_mm)
 
-ggplot(teste_t, aes(sample = Diametro_mm)) +
+ggplot(
+  teste_t,
+  aes(sample = Diametro_mm)) +
   stat_qq() +
   stat_qq_line() +
   facet_wrap(~ Centro_Usinagem) +
@@ -172,8 +174,9 @@ ggplot(teste_t, aes(sample = Diametro_mm)) +
 diferencas <- teste_t$Antes_Ajuste - teste_t$Depois_Ajuste
 shapiro.test(diferencas)
 
-ggplot(teste_t,
-       aes(sample = diferencas)) +
+ggplot(
+  teste_t,
+  aes(sample = diferencas)) +
   stat_qq() +
   stat_qq_line() +
   theme_light() +
