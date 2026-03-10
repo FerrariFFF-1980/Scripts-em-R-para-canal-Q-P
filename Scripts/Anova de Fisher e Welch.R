@@ -66,9 +66,8 @@ ggplot(
     legend.position = "none"
   )
 
-#################################
-### Ajuste da ANOVA de Fisher ###
-#################################
+
+# Ajuste da ANOVA de Fisher
 modelo_anova <- aov(Diametro_mm ~ CentroUsinagem, data = ANOVA)
 summary(modelo_anova)
 
@@ -132,9 +131,7 @@ shapiro.test(residuos)
 bartlett.test(Diametro_mm ~ CentroUsinagem, data = ANOVA)
 leveneTest(Diametro_mm ~ CentroUsinagem, data = ANOVA)
 
-###########################################################
-### ANOVA de Welch (robusta para variâncias diferentes) ###
-###########################################################
+# ANOVA de Welch (robusta para variâncias diferentes)
 oneway.test(
   Diametro_mm ~ CentroUsinagem,
   data = ANOVA,
@@ -197,7 +194,6 @@ pairwise_t_test(
   data = ANOVA,
   formula = Diametro_mm ~ CentroUsinagem,
   p.adjust.method = "bonferroni",
-  conf.level = 0.95,
   pool.sd = TRUE
 )
 
