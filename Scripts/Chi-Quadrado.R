@@ -1,29 +1,27 @@
-# Análise Qui-quadrado ----
-## Arquivo: Chi-quadrado.xlsx ----
+# Análise Qui-quadrado (Chi-squared) ----
+## Arquivo: Qui-quadrado.xlsx ----
 
 # Configurações ----
 
 ## Evita notação científica ----
 options(scipen = 999, digits = 6)
 
-## PALETA OKABE-ITO ----
-okabe_ito <- c(
-  "#E69F00",  # laranja
-  "#56B4E9",  # azul claro
-  "#009E73",  # verde
-  "#F0E442",  # amarelo
-  "#0072B2",  # azul
-  "#D55E00",  # vermelho
-  "#CC79A7",  # roxo
-  "#000000"   # preto
-)
+## Paleta de Cores Okabe-Ito ----
+okabe_ito <- c("#E69F00",  # laranja
+               "#56B4E9",  # azul claro
+               "#009E73",  # verde
+               "#F0E442",  # amarelo
+               "#0072B2",  # azul
+               "#D55E00",  # vermelho
+               "#CC79A7",  # roxo
+               "#000000")  # preto
 
 ## Carrega pacotes necessários ----
 library(ggplot2)
 library(readxl)
 
 ## Importar dados ----
-dados <- read_excel("Dados/Chi-quadrado.xlsx")
+dados <- read_excel("Dados/Qui-quadrado.xlsx")
 
 # Preparação dos dados ----
 
@@ -55,11 +53,11 @@ tabela_esp
 
 # Análise Qui-quadrado ----
 
-## Contribuição Chi-quadrado ----
+## Contribuição Qui-quadrado ----
 chi_contrib <- (tabela_obs - tabela_esp)^2 / tabela_esp
 chi_contrib
 
-## Teste Chi-quadrado ----
+## Teste Qui-quadrado ----
 teste_chi <- chisq.test(tabela_obs)
 teste_chi
 
