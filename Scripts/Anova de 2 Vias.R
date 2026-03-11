@@ -1,21 +1,18 @@
-#################################
-# TWO-WAY ANOVA                 #
-# Anova de 2 vias - ANOVA2.xlsx #
-#################################
+# Anova de 2 vias ----
+# Importar: ANOVA2.xlsx ----
 
-# Evita notação científica
+# Evita notação científica ----
 options(scipen = 999, digits = 6)
 
-# Pacotes
+# Pacotes ----
 library(ggplot2)
 library(car)
-library(readxl)
 
-# Preparação dos dados
+# Preparação dos dados ----
 ANOVA2$CentroUsinagem <- as.factor(ANOVA2$CentroUsinagem)
 ANOVA2$VelocidadeCorte <- as.factor(ANOVA2$VelocidadeCorte)
 
-# Paleta de cores
+# Paleta de cores ----
 okabe_ito <- c(
   "#E69F00",
   "#56B4E9",
@@ -26,7 +23,7 @@ okabe_ito <- c(
   "#CC79A7",
   "#000000")
 
-# Boxplots
+# Boxplots ----
 ggplot(
   ANOVA2,
   aes(x = CentroUsinagem, y = Diametro_mm, fill = VelocidadeCorte)) +
@@ -37,7 +34,7 @@ ggplot(
     x = "Centro de Usinagem", y = "Diâmetro (mm)") +
   theme_light()
 
-# Gráfico de Interações
+# Gráfico de Interações ----
 ggplot(
   ANOVA2,
   aes(x = VelocidadeCorte, y = Diametro_mm,
@@ -52,13 +49,13 @@ ggplot(
     y = "Média do Diâmetro (mm)") +
   theme_light()
 
-# Modelo Two-Way Anova
-modelo_two_way <- aov(Diametro_mm ~ CentroUsinagem * VelocidadeCorte,
+# Modelo Two-Way Anova ----
+modelo_two_way <- aov(Diametro_mm ~ CentroUsinagem + VelocidadeCorte,
   data = ANOVA2)
 
 summary(modelo_two_way)
 
-# Resíduos
+# Resíduos ----
 residuos <- residuals(modelo_two_way)
 ajustados <- fitted(modelo_two_way)
 
@@ -67,7 +64,7 @@ dados_residuos <- data.frame(
   Residuos = residuos
 )
 
-# Resíduos vs. Valores Ajustados
+# Resíduos vs. Valores Ajustados ----
 ggplot(
   dados_residuos,
   aes(x = Ajustados, y = Residuos)) +
@@ -76,11 +73,10 @@ ggplot(
   labs(
     title = "Resíduos vs Ajustados",
     x = "Valores Ajustados",
-    y = "Resíduos"
-  ) +
+    y = "Resíduos") +
   theme_light()
 
-# Gráfico de Normalidade de Resíduos (Q-Q)
+# Gráfico de Normalidade de Resíduos (Q-Q) ----
 ggplot(
   data.frame(residuos),
   aes(sample = residuos)) +
@@ -89,10 +85,10 @@ ggplot(
   labs(title = "Gráfico Q-Q dos Resíduos") +
   theme_light()
 
-# Teste de Normalidade dos Resíduos
+# Teste de Normalidade dos Resíduos ----
 shapiro.test(residuos)
 
-# Homoscedasticidade (Igualdade de Variâncias)
+# Homoscedasticidade (Igualdade de Variâncias) ----
 leveneTest(
   Diametro_mm ~ interaction(CentroUsinagem, VelocidadeCorte),
   data = ANOVA2
@@ -103,5 +99,7 @@ bartlett.test(
   data = ANOVA2
 )
 
-# Pós-Teste: Tukey HSD
+# Pós-Teste: Tukey HSD ----
 TukeyHSD(modelo_two_way)
+
+
