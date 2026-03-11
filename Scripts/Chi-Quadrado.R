@@ -20,20 +20,15 @@ okabe_ito <- c("#E69F00",  # laranja
 library(ggplot2)
 library(readxl)
 
-## Importar dados ----
-dados <- read_excel("Dados/Qui-quadrado.xlsx")
-
 # Preparação dos dados ----
 
 ## Converte as variáveis categóricas para fator ----
-dados$CentroUsinagem <- as.factor(dados$CentroUsinagem)
-dados$TipoDefeito <- as.factor(dados$TipoDefeito)
+Qui_quadrado$CentroUsinagem <- as.factor(Qui_quadrado$CentroUsinagem)
+Qui_quadrado$TipoDefeito <- as.factor(Qui_quadrado$TipoDefeito)
 
 ## Cria a tabela de contingência a partir do arquivo ----
-tabela_obs <- xtabs(
-  Frequencia ~ CentroUsinagem + TipoDefeito,
-  data = dados
-)
+tabela_obs <- xtabs(Frequencia ~ CentroUsinagem + TipoDefeito,
+  data = Qui_quadrado)
 
 tabela_obs
 
