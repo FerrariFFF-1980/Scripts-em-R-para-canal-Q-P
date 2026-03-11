@@ -134,7 +134,7 @@ dados$Residuo_Multiplo <- resid(modelo_linear_multiplo)
 # Variance Inflaction Factor (VIF) ----
 vif(modelo_linear_multiplo)
 
-# Gráfico Observados vs. Ajustados
+# Gráfico Observados vs. Ajustados ----
 ggplot(dados, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
   geom_point(color = okabe_ito[3], size = 3, alpha = 0.85) +
   geom_abline(intercept = 0, slope = 1, color = okabe_ito[6],
@@ -149,7 +149,7 @@ ggplot(dados, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
         plot.subtitle = element_text(face = "bold"),
         axis.title = element_text(face = "bold"))
 
-# Resíduos do Modelo Múltiplo
+# Resíduos do Modelo Múltiplo ----
 ggplot(dados, aes(x=Ajustado_Multiplo, y=Residuo_Multiplo)) +
   geom_point(color = okabe_ito[1], size = 3, alpha = 0.85) +
   geom_hline(yintercept = 0, linetype = "dashed",
@@ -166,7 +166,7 @@ ggplot(dados, aes(x=Ajustado_Multiplo, y=Residuo_Multiplo)) +
     plot.subtitle = element_text(face = "bold"),
     axis.title = element_text(face = "bold"))
 
-# Cria um data frame com medidas de diagnóstico do modelo múltiplo
+# Cria um data frame com medidas de diagnóstico do modelo múltiplo ----
 diagnosticos <- data.frame(
   Ajustado = fitted(modelo_linear_multiplo),
   Residuo = resid(modelo_linear_multiplo),
@@ -175,17 +175,17 @@ diagnosticos <- data.frame(
   Distancia_Cook = cooks.distance(modelo_linear_multiplo)
 )
 
-# Cria a raiz do valor absoluto do resíduo padronizado
+# Cria a raiz do valor absoluto do resíduo padronizado ----
 diagnosticos$Raiz_Residuo_Padronizado <- sqrt(abs(diagnosticos$Residuo_Padronizado))
 
-# Gráfico 1: resíduos vs ajustados
+# Gráfico 1: resíduos vs ajustados ----
 grafico_diag_1 <- ggplot(diagnosticos,
   aes(x = Ajustado, y = Residuo)) +
   geom_point(color = okabe_ito[5], size = 3, alpha = 0.85) +
   geom_hline(yintercept = 0, linetype = "dashed",
              color = okabe_ito[8],
              linewidth = 0.8) +
-  geom_smooth(method = "loess", se = FALSE, # LOESS = Locally Estimated Scatterplot Smoothing
+  geom_smooth(method = "loess", se = FALSE, # LOESS = Locally Estimated Scatterplot Smoothing ----
               color = okabe_ito[6],
               linewidth = 1) +
   theme_light() +
@@ -196,7 +196,7 @@ grafico_diag_1 <- ggplot(diagnosticos,
   theme(plot.title = element_text(face = "bold"),
         axis.title = element_text(face = "bold"))
 
-# Gráfico 2: Q-Q plot
+# Gráfico 2: Q-Q plot ----
 grafico_diag_2 <- ggplot(diagnosticos,
                          aes(sample = Residuo_Padronizado)) +
   stat_qq(color = okabe_ito[3], size = 2.5, alpha = 0.85) +
@@ -210,7 +210,7 @@ grafico_diag_2 <- ggplot(diagnosticos,
     plot.title = element_text(face = "bold"),
     axis.title = element_text(face = "bold"))
 
-# Gráfico 3: Scale-Location
+# Gráfico 3: Scale-Location ----
 grafico_diag_3 <- ggplot(diagnosticos,
   aes(x = Ajustado, y = Raiz_Residuo_Padronizado)) +
   geom_point(color = okabe_ito[2], size = 3, alpha = 0.85) +
@@ -225,7 +225,7 @@ grafico_diag_3 <- ggplot(diagnosticos,
     plot.title = element_text(face = "bold"),
     axis.title = element_text(face = "bold"))
 
-# Gráfico 4: resíduos padronizados vs leverage
+# Gráfico 4: resíduos padronizados vs leverage ----
 grafico_diag_4 <- ggplot(diagnosticos,
   aes(x = Leverage, y = Residuo_Padronizado)) +
   geom_point(aes(size = Distancia_Cook), color = okabe_ito[7],
@@ -244,7 +244,7 @@ grafico_diag_4 <- ggplot(diagnosticos,
     plot.title = element_text(face = "bold"),
     axis.title = element_text(face = "bold"))
 
-# Combina os quatro gráficos em um painel único
+# Combina os quatro gráficos em um painel único ----
 painel_diagnosticos <- (grafico_diag_1 + grafico_diag_2 +
     grafico_diag_3 + grafico_diag_4) +
   plot_annotation(
@@ -254,14 +254,14 @@ painel_diagnosticos <- (grafico_diag_1 + grafico_diag_2 +
                                 size = 14)))
 painel_diagnosticos
 
-# Comparação entre modelos
+# Comparação entre modelos ----
 summary(modelo_linear_simples)$r.squared
 summary(modelo_linear_simples)$adj.r.squared
 
 summary(modelo_linear_multiplo)$r.squared
 summary(modelo_linear_multiplo)$adj.r.squared
 
-# Previsões de novos valores usando o modelo
+# Previsões de novos valores usando o modelo ----
 novos_dados <- data.frame(
   Avanco_mm_min = c(175, 190, 205),
   Rotacao_rpm = c(2500, 2400, 2300),
@@ -269,15 +269,15 @@ novos_dados <- data.frame(
   Temperatura_C = c(41.5, 45.0, 48.5),
   Concentracao_Fluido_pct = c(6.4, 6.0, 5.8))
 
-# Previsões pontuais
+# Previsões pontuais ----
 predict(modelo_linear_multiplo, newdata = novos_dados)
 
-# Intervalos de confiança para a média
+# Intervalos de confiança para a média ----
 predict(modelo_linear_multiplo,
         newdata = novos_dados,
         interval = "confidence")
 
-# Intervalos de predição para novas observações
+# Intervalos de predição para novas observações ----
 predict(modelo_linear_multiplo,
         newdata = novos_dados,
         interval = "prediction")
