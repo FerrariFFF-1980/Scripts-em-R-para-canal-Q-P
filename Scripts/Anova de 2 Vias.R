@@ -11,9 +11,6 @@ library(ggplot2)
 library(car)
 library(readxl)
 
-# Importa os dados
-ANOVA2 <- read_excel("Dados/ANOVA2.xlsx")
-
 # Preparação dos dados
 ANOVA2$CentroUsinagem <- as.factor(ANOVA2$CentroUsinagem)
 ANOVA2$VelocidadeCorte <- as.factor(ANOVA2$VelocidadeCorte)
