@@ -18,7 +18,6 @@ okabe_ito <- c("#E69F00",  # laranja
 
 ## Carrega pacotes necessários ----
 library(ggplot2)
-library(readxl)
 
 # Preparação dos dados ----
 
