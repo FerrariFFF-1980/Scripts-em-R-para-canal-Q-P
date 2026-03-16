@@ -84,5 +84,6 @@ ggplot(usinagem, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
         plot.subtitle = element_text(face = "bold"),
         axis.title = element_text(face = "bold"))
 
+# Predição de valores usando o modelo ajustado ----
 predict(modelo_linear_simples,
         newdata = data.frame(Avanco_mm_min = c(120, 150, 180)))
