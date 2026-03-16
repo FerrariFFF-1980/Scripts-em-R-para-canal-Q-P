@@ -5,7 +5,6 @@
 options(scipen = 999, digits = 4)
 
 # Carrega os pacotes necessários ----
-library(readxl)
 library(ggplot2)
 library(patchwork)
 library(car)
@@ -21,54 +20,35 @@ okabe_ito <- c(
   "#CC79A7", # roxo
   "#000000")# preto
 
-# Converte para data frame base ----
-dados <- as.data.frame(dados)
-
-# Mostra as primeiras linhas ----
-head(dados)
-
-# Mostra a estrutura dos dados ----
-str(dados)
-
 # Estatísticas descritivas ----
-summary(dados)
-
-# Nomes das colunas ----
-names(dados)
-
-# Seleciona apenas as colunas numéricas relevantes ----
-dados_correlacao <- dados[, c(
-  "Rugosidade_Ra",
-  "Avanco_mm_min",
-  "Rotacao_rpm",
-  "Desgaste_Ferramenta_mm",
-  "Temperatura_C",
-  "Concentracao_Fluido_pct"
-)]
+summary(usinagem)
 
 # Calcula a matriz de correlação de Pearson ----
-matriz_correlacao <- cor(dados_correlacao, method = "pearson")
+matriz_correlacao <- cor(usinagem, method = "pearson")
 matriz_correlacao
 
+# Ajusta o modelo linear simples ----
+modelo_linear_simples <- lm(Rugosidade_Ra ~ Avanco_mm_min,
+                            data = usinagem)
+
+# R² - coeficiente de determinação do modelo linear simples ----
+r2_simples <- round(summary(modelo_linear_simples)$r.squared, 4)
+
 # Gráfico de Dispersao ----
-ggplot(dados, aes(x = Avanco_mm_min, y = Rugosidade_Ra)) +
+ggplot(usinagem, aes(x = Avanco_mm_min, y = Rugosidade_Ra)) +
   geom_point(color = okabe_ito[5], size = 3, alpha = 0.85) +
   geom_smooth(method = "lm", se = TRUE, color = okabe_ito[6],
     fill = okabe_ito[2], linewidth = 1) +
   theme_light() +
   labs(
     title = "Rugosidade vs Avanço",
-    subtitle = "Dispersão com reta de regressão linear",
+    subtitle = paste("Dispersão com reta de regressão linear | R² =", r2_simples),
     x = "Avanço (mm/min)",
     y = "Rugosidade Ra"
   ) +
   theme(plot.title = element_text(face = "bold"),
     plot.subtitle = element_text(face = "bold"),
     axis.title = element_text(face = "bold"))
-
-# Ajusta o modelo linear simples ----
-modelo_linear_simples <- lm(Rugosidade_Ra ~ Avanco_mm_min,
-  data = dados)
 
 # Resumo do modelo ----
 summary(modelo_linear_simples)
@@ -80,14 +60,14 @@ coef(modelo_linear_simples)
 confint(modelo_linear_simples)
 
 # Valores ajustados ----
-dados$Ajustado_Simples <- fitted(modelo_linear_simples)
+usinagem$Ajustado_Simples <- fitted(modelo_linear_simples)
 
 # Resíduos ----
-dados$Residuo_Simples <- resid(modelo_linear_simples)
+usinagem$Residuo_Simples <- resid(modelo_linear_simples)
 
 # Gráfico dos Resíduos do modelo simples ----
-ggplot(dados, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
-  geom_point(color = okabe_ito[7], size = 3, alpha = 0.85) +
+ggplot(usinagem, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
+  geom_point(color = okabe_ito[2], size = 3, alpha = 0.85) +
   geom_hline(yintercept = 0, linetype = "dashed",
              color = okabe_ito[8], linewidth = 0.8) +
   theme_light() +
@@ -111,7 +91,7 @@ modelo_linear_multiplo <- lm(
     Desgaste_Ferramenta_mm +
     Temperatura_C +
     Concentracao_Fluido_pct,
-  data = dados)
+  data = usinagem)
 
 # Resumo do modelo ----
 summary(modelo_linear_multiplo)
@@ -126,23 +106,26 @@ confint(modelo_linear_multiplo)
 anova(modelo_linear_multiplo)
 
 # Valores ajustados ----
-dados$Ajustado_Multiplo <- fitted(modelo_linear_multiplo)
+usinagem$Ajustado_Multiplo <- fitted(modelo_linear_multiplo)
 
 # Resíduos ----
-dados$Residuo_Multiplo <- resid(modelo_linear_multiplo)
+usinagem$Residuo_Multiplo <- resid(modelo_linear_multiplo)
 
 # Variance Inflaction Factor (VIF) ----
 vif(modelo_linear_multiplo)
 
+# R2 - coeficiente de determinação do modelo linear múltiplo
+r2_multiplo <- round(summary(modelo_linear_multiplo)$r.squared, 4)
+
 # Gráfico Observados vs. Ajustados ----
-ggplot(dados, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
+ggplot(usinagem, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
   geom_point(color = okabe_ito[3], size = 3, alpha = 0.85) +
   geom_abline(intercept = 0, slope = 1, color = okabe_ito[6],
     linetype = "dashed", linewidth = 1) +
   theme_light() +
   labs(
     title = "Observado vs Ajustado",
-    subtitle = "Modelo linear múltiplo",
+    subtitle = paste("Modelo linear múltiplo | R² =", r2_multiplo),
     x = "Rugosidade observada",
     y = "Rugosidade ajustada") +
   theme(plot.title = element_text(face = "bold"),
@@ -150,7 +133,7 @@ ggplot(dados, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
         axis.title = element_text(face = "bold"))
 
 # Resíduos do Modelo Múltiplo ----
-ggplot(dados, aes(x=Ajustado_Multiplo, y=Residuo_Multiplo)) +
+ggplot(usinagem, aes(x=Ajustado_Multiplo, y=Residuo_Multiplo)) +
   geom_point(color = okabe_ito[1], size = 3, alpha = 0.85) +
   geom_hline(yintercept = 0, linetype = "dashed",
              color = okabe_ito[8],
@@ -281,3 +264,4 @@ predict(modelo_linear_multiplo,
 predict(modelo_linear_multiplo,
         newdata = novos_dados,
         interval = "prediction")
+
