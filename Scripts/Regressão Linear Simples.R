@@ -44,12 +44,7 @@ ggplot(usinagem, aes(x = Avanco_mm_min, y = Rugosidade_Ra)) +
     title = "Rugosidade vs Avanço",
     subtitle = paste("Dispersão com reta de regressão linear | R² =",
                      r2_simples),
-    x = "Avanço (mm/min)", y = "Rugosidade Ra") +
-  theme(
-    plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
-  )
+    x = "Avanço (mm/min)", y = "Rugosidade Ra")
 
 # Resumo do modelo ----
 summary(modelo_linear_simples)
@@ -68,7 +63,7 @@ usinagem$Residuo_Simples <- resid(modelo_linear_simples)
 
 # Gráfico resíduos vs ajustados do modelo simples ----
 ggplot(usinagem, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
-  geom_point(color = okabe_ito[2], size = 3, alpha = 0.85) +
+  geom_point(color = okabe_ito[2], size = 3) +
   geom_hline(yintercept = 0, linetype = "dashed", color = okabe_ito[8],
     linewidth = 0.8) +
   theme_light() +
@@ -76,13 +71,9 @@ ggplot(usinagem, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
     title = "Resíduos vs Ajustados",
     subtitle = "Modelo linear simples",
     x = "Valores ajustados",
-    y = "Resíduos"
-  ) +
-  theme(plot.title = element_text(face = "bold"),
-        plot.subtitle = element_text(face = "bold"),
-        axis.title = element_text(face = "bold"))
+    y = "Resíduos")
 
 # Predição de valores usando o modelo ajustado ----
 predict(modelo_linear_simples,
-        newdata = data.frame(Avanco_mm_min = c(120, 150, 180)))
+        newdata = data.frame(Avanco_mm_min = c(120, 150, 180, 300)))
 
