@@ -6,7 +6,6 @@ options(scipen = 999, digits = 4)
 
 # Carrega os pacotes necessários ----
 library(ggplot2)
-library(patchwork)
 library(car)
 
 # Paleta de cores Okabe-Ito ----
@@ -34,7 +33,6 @@ modelo_linear_simples <- lm(Rugosidade_Ra ~ Avanco_mm_min,
 
 # R² e R² ajustado do modelo linear simples ----
 r2_simples <- round(summary(modelo_linear_simples)$r.squared, 4)
-r2aj_simples <- round(summary(modelo_linear_simples)$adj.r.squared, 4)
 
 # Gráfico de dispersão ----
 ggplot(usinagem, aes(x = Avanco_mm_min, y = Rugosidade_Ra)) +
@@ -45,7 +43,7 @@ ggplot(usinagem, aes(x = Avanco_mm_min, y = Rugosidade_Ra)) +
   labs(
     title = "Rugosidade vs Avanço",
     subtitle = paste("Dispersão com reta de regressão linear | R² =",
-                     r2_simples, "| R² ajustado =", r2aj_simples),
+                     r2_simples),
     x = "Avanço (mm/min)", y = "Rugosidade Ra") +
   theme(
     plot.title = element_text(face = "bold"),
@@ -87,3 +85,4 @@ ggplot(usinagem, aes(x = Ajustado_Simples, y = Residuo_Simples)) +
 # Predição de valores usando o modelo ajustado ----
 predict(modelo_linear_simples,
         newdata = data.frame(Avanco_mm_min = c(120, 150, 180)))
+
