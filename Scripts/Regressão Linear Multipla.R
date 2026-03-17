@@ -71,12 +71,7 @@ ggplot(usinagem, aes(x = Rugosidade_Ra, y = Ajustado_Multiplo)) +
     title = "Observado vs Ajustado",
     subtitle = paste("Modelo linear múltiplo | R² =", r2_multiplo,
                      "| R² ajustado =", r2aj_multiplo),
-    x = "Rugosidade observada", y = "Rugosidade ajustada") +
-  theme(
-    plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
-  )
+    x = "Rugosidade observada", y = "Rugosidade ajustada")
 
 # Gráfico resíduos vs ajustados do modelo múltiplo ----
 ggplot(usinagem, aes(x = Ajustado_Multiplo, y = Residuo_Multiplo)) +
@@ -89,11 +84,6 @@ ggplot(usinagem, aes(x = Ajustado_Multiplo, y = Residuo_Multiplo)) +
     subtitle = "Modelo linear múltiplo",
     x = "Valores ajustados",
     y = "Resíduos"
-  ) +
-  theme(
-    plot.title = element_text(face = "bold"),
-    plot.subtitle = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
   )
 
 # Cria um data frame com medidas de diagnóstico do modelo múltiplo ----
@@ -115,10 +105,6 @@ grafico_diag_1 <- ggplot(diagnosticos, aes(x = Ajustado, y = Residuo)) +
     title = "Resíduos vs Ajustados",
     x = "Valores ajustados",
     y = "Resíduos"
-  ) +
-  theme(
-    plot.title = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
   )
 
 # Gráfico 2: Q-Q plot dos resíduos padronizados ----
@@ -130,10 +116,6 @@ grafico_diag_2 <- ggplot(diagnosticos, aes(sample = Residuo_Padronizado)) +
     title = "Q-Q Plot",
     x = "Quantis teóricos",
     y = "Quantis observados"
-  ) +
-  theme(
-    plot.title = element_text(face = "bold"),
-    axis.title = element_text(face = "bold")
   )
 
 # Gráfico 3: histograma dos resíduos padronizados com curva normal ----
@@ -151,9 +133,7 @@ grafico_diag_3 <- ggplot(diagnosticos, aes(x = Residuo_Padronizado)) +
   labs(
     title = "Histograma dos Resíduos Padronizados",
     x = "Resíduo padronizado",
-    y = "Densidade") +
-  theme(plot.title = element_text(face = "bold"),
-        axis.title = element_text(face = "bold"))
+    y = "Densidade")
 
 # Gráfico 4: resíduos padronizados vs leverage ----
 grafico_diag_4 <- ggplot(diagnosticos,
@@ -169,9 +149,7 @@ grafico_diag_4 <- ggplot(diagnosticos,
     x = "Leverage",
     y = "Resíduo padronizado",
     size = "Cook"
-  ) +
-  theme(plot.title = element_text(face = "bold"),
-        axis.title = element_text(face = "bold"))
+  )
 
 # Combina os quatro gráficos em um painel único ----
 painel_diagnosticos <- (grafico_diag_1 + grafico_diag_2 +
