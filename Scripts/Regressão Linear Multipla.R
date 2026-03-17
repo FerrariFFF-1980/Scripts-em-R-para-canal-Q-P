@@ -32,8 +32,7 @@ matriz_correlacao
 
 # Ajusta o modelo linear múltiplo ----
 modelo_linear_multiplo <- lm(Rugosidade_Ra ~ Avanco_mm_min +
-                               Rotacao_rpm + Desgaste_Ferramenta_mm +
-                               Temperatura_C + Concentracao_Fluido_pct,
+                               Rotacao_rpm + Temperatura_C,
                              data = usinagem)
 
 # Resumo do modelo ----
@@ -83,8 +82,7 @@ ggplot(usinagem, aes(x = Ajustado_Multiplo, y = Residuo_Multiplo)) +
     title = "Resíduos vs Ajustados",
     subtitle = "Modelo linear múltiplo",
     x = "Valores ajustados",
-    y = "Resíduos"
-  )
+    y = "Resíduos")
 
 # Cria um data frame com medidas de diagnóstico do modelo múltiplo ----
 diagnosticos <- data.frame(
@@ -92,8 +90,7 @@ diagnosticos <- data.frame(
   Residuo = resid(modelo_linear_multiplo),
   Residuo_Padronizado = rstandard(modelo_linear_multiplo),
   Leverage = hatvalues(modelo_linear_multiplo),
-  Distancia_Cook = cooks.distance(modelo_linear_multiplo)
-)
+  Distancia_Cook = cooks.distance(modelo_linear_multiplo))
 
 # Gráfico 1: resíduos vs ajustados ----
 grafico_diag_1 <- ggplot(diagnosticos, aes(x = Ajustado, y = Residuo)) +
@@ -101,39 +98,29 @@ grafico_diag_1 <- ggplot(diagnosticos, aes(x = Ajustado, y = Residuo)) +
   geom_hline(yintercept = 0, linetype = "dashed", color = okabe_ito[8],
     linewidth = 0.8) +
   theme_light() +
-  labs(
-    title = "Resíduos vs Ajustados",
-    x = "Valores ajustados",
-    y = "Resíduos"
-  )
+  labs(title = "Resíduos vs Ajustados",
+       x = "Valores ajustados", y = "Resíduos")
 
 # Gráfico 2: Q-Q plot dos resíduos padronizados ----
 grafico_diag_2 <- ggplot(diagnosticos, aes(sample = Residuo_Padronizado)) +
   stat_qq(color = okabe_ito[3], size = 2.5, alpha = 0.85) +
   stat_qq_line(color = okabe_ito[6], linewidth = 1) +
   theme_light() +
-  labs(
-    title = "Q-Q Plot",
-    x = "Quantis teóricos",
-    y = "Quantis observados"
-  )
+  labs(title = "Q-Q Plot",
+       x = "Quantis teóricos",
+       y = "Quantis observados")
 
 # Gráfico 3: histograma dos resíduos padronizados com curva normal ----
 grafico_diag_3 <- ggplot(diagnosticos, aes(x = Residuo_Padronizado)) +
-  geom_histogram(
-    aes(y = after_stat(density)), bins = 10, fill = okabe_ito[2],
+  geom_histogram(aes(y = after_stat(density)), bins = 10, fill = okabe_ito[2],
     color = okabe_ito[8], alpha = 0.85) +
   stat_function(fun = dnorm, args = list(
       mean = mean(diagnosticos$Residuo_Padronizado),
       sd = sd(diagnosticos$Residuo_Padronizado)),
-    color = okabe_ito[6],
-    linewidth = 1
-  ) +
+    color = okabe_ito[6], linewidth = 1) +
   theme_light() +
-  labs(
-    title = "Histograma dos Resíduos Padronizados",
-    x = "Resíduo padronizado",
-    y = "Densidade")
+  labs(title = "Histograma dos Resíduos Padronizados",
+       x = "Resíduo padronizado", y = "Densidade")
 
 # Gráfico 4: resíduos padronizados vs leverage ----
 grafico_diag_4 <- ggplot(diagnosticos,
@@ -144,21 +131,15 @@ grafico_diag_4 <- ggplot(diagnosticos,
              color = okabe_ito[8],
              linewidth = c(0.8, 0.6, 0.8)) +
   theme_light() +
-  labs(
-    title = "Resíduos vs Leverage",
-    x = "Leverage",
-    y = "Resíduo padronizado",
-    size = "Cook"
-  )
+  labs(title = "Resíduos vs Leverage",
+       x = "Leverage", y = "Resíduo padronizado", size = "Cook")
 
 # Combina os quatro gráficos em um painel único ----
 painel_diagnosticos <- (grafico_diag_1 + grafico_diag_2 +
                           grafico_diag_3 + grafico_diag_4) +
   plot_annotation(
     title = "Diagnósticos do Modelo Linear Múltiplo",
-    theme = theme(
-      plot.title = element_text(face = "bold", hjust = 0.5, size = 14)
-    ))
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 14)))
 
 painel_diagnosticos
 
@@ -167,12 +148,9 @@ summary(modelo_linear_multiplo)$adj.r.squared
 
 # Previsões de novos valores usando o modelo ----
 novos_dados <- data.frame(
-  Avanco_mm_min           = c(175, 190, 205),
+  Avanco_mm_min           = c(175,  190,  205),
   Rotacao_rpm             = c(2500, 2400, 2300),
-  Desgaste_Ferramenta_mm  = c(0.12, 0.18, 0.24),
-  Temperatura_C           = c(41.5, 45.0, 48.5),
-  Concentracao_Fluido_pct = c(6.4, 6.0, 5.8)
-)
+  Temperatura_C           = c(41.5, 45.0, 48.5))
 
 # Previsões pontuais ----
 predict(modelo_linear_multiplo, newdata = novos_dados)
