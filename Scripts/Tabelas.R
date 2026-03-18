@@ -20,30 +20,23 @@ tabela_exemplo <- data.frame(
   Percentual_Refugo = c(1.5, 3.5, 1.0))
 
 # Tabela simples usando knitr::kable ----
-kable(
-  tabela_exemplo,
-  caption = "Resumo dos centros de usinagem",
-  align = c("l", "c", "c", "c", "c"),  # alinhamento colunas
-  digits = 2                           # casas decimais
-)
+kable(tabela_exemplo,
+      caption = "Resumo dos centros de usinagem",
+      align = c("l", "c", "c", "c", "c"),  # alinhamento colunas
+      digits = 2)                          # casas decimais
 
 # Tabela com formatação visual usando kableExtra ----
-kable(
-  tabela_exemplo,
-  caption = "Resumo dos centros de usinagem",
-  align = c("l", "c", "c", "c", "c"),
-  digits = c(0, 0, 3, 3, 0, 1)) %>%
-  kable_styling(
-    full_width = FALSE,                # evita que a tabela ocupe toda a largura
-    bootstrap_options = c(
-      "striped",                       # linhas alternadas
+kable(tabela_exemplo,  caption = "Resumo dos centros de usinagem",
+      align = c("l", "c", "c", "c", "c"),
+      digits = c(0, 0, 3, 3, 0, 1)) %>%
+    kable_styling(full_width = FALSE,  # evita a tabela ocupe toda a largura
+    bootstrap_options = c("striped",   # linhas alternadas
       "hover",                         # destaque ao passar o mouse
       "condensed"),                    # espaçamento mais compacto
     position = "center") %>%
   row_spec(0, bold = TRUE) %>%         # destaca o cabeçalho
   column_spec(1, bold = TRUE) %>%      # destaca a primeira coluna
-  footnote(
-    general = "Dados fictícios utilizados apenas para exemplo.")
+  footnote(general = "Dados fictícios utilizados apenas para exemplo.")
 
 # Tabela utilizando o pacote gt ----
 # Mais controle sobre aparência e rotulagem
