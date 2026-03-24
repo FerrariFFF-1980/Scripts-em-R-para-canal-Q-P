@@ -48,8 +48,7 @@ cat("p-valor aproximacao normal =", p_normal, "\n")
 df <- data.frame(
   observacao = factor(1:length(x)),
   diferenca = d,
-  sinal = factor(sign, levels = c("+", "-", "Empate"))
-)
+  sinal = factor(sign, levels = c("+", "-", "Empate")))
 
 # gráfico dos sinais ----
 ggplot(df, aes(observacao, diferenca, fill = sinal)) +
@@ -59,7 +58,7 @@ ggplot(df, aes(observacao, diferenca, fill = sinal)) +
     data = subset(df, sinal == "Empate"),
     aes(observacao, 0.2, label = "Empate"),
     inherit.aes = FALSE,
-    size = 3
-  ) +
+    size = 3) +
   scale_fill_manual(values = pal) +
+  labs(title = "Gráfico das Diferenças")+
   theme_minimal()
