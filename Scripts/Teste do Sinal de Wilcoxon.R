@@ -11,7 +11,7 @@
 library(ggplot2)
 
 # Paleta Okabe-Ito ----
-pal <- c(Positivo="#009E73", Negativo="#D55E00")
+pal <- c("+"="#009E73", "-"="#D55E00")
 
 # Dados da amostra ----
 x <- c(12,15,14,10,16,13,11,15,14,12)
@@ -29,21 +29,14 @@ d <- d[d != 0]
 postos <- rank(abs(d))
 
 # Classificação dos sinais ----
-sinal <- ifelse(d > 0,"Positivo","Negativo")
+sinal <- ifelse(d > 0,"+","-")
 
-# Estatística W (soma dos postos positivos) ----
-W <- sum(postos[d > 0])
+# Estatísticas W+ e W- (soma dos postos positivos e negativos) ----
+W_plus <- sum(postos[d > 0])
+W_minus <- sum(postos[d < 0])
 
 # Teste de Wilcoxon do R ----
-teste <- wilcox.test(x, mu = m0, exact = TRUE)
-teste
-
-# p-valor ----
-p_valor <- teste$p.value
-
-# Resultados ----
-cat("W =", W, "\n")
-cat("p-valor =", p_valor, "\n")
+wilcox.test(x, mu = m0, exact = TRUE)
 
 # Data frame para gráfico ----
 df <- data.frame(observacao = factor(1:length(d)),
@@ -54,12 +47,14 @@ ggplot(df,aes(observacao,diferenca,fill=sinal)) +
   geom_col() +
   geom_hline(yintercept=0,linetype="dashed") +
   scale_fill_manual(values=pal) +
-  labs(title="Diferenças em relação à mediana", x="Observação", y="x - mediana hipotética") +
+  labs(title="Diferenças em relação à mediana",
+       x="Observação", y="x - mediana hipotética") +
   theme_minimal()
 
 # Gráfico dos postos ----
 ggplot(df,aes(observacao,posto,fill=sinal)) +
   geom_col() +
   scale_fill_manual(values=pal) +
-  labs(title="Postos absolutos usados no teste de Wilcoxon", x="Observação", y="Posto")+
+  labs(title="Postos absolutos usados no teste de Wilcoxon",
+       x="Observação", y="Posto")+
   theme_minimal()
