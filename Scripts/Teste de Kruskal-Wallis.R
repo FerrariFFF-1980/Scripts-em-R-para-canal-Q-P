@@ -1,4 +1,10 @@
 # Teste de Kruskal-Wallis ----
+# Alternativa não-paramétrica ao ANOVA de 1 via
+# Não depende de distribuição normal
+# Funciona bem com dados assimétricos
+# Usa postos, não valores absolutos
+# Valores extremos não "puxam" os resultados
+# Pode usar rankings, notas, escalas subjetivas
 
 # Configuracoes ----
 options(scipen = 999)
