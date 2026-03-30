@@ -44,13 +44,6 @@ paleta_okabe_ito <- c(
   "Método B" = "#56b4e9",
   "Método C" = "#009e73")
 
-ggplot(dados, aes(x = Grupo, y = Resposta, fill = Grupo)) +
-  geom_boxplot(alpha = 0.8, width = 0.6) +
-  scale_fill_manual(values = paleta_okabe_ito) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none") +
-  labs(title = "Boxplot por grupo", x = "Grupo", y = "Resposta")
-
 # Kruskal-wallis ----
 kruskal.test(Resposta ~ Grupo, data = dados)
 
@@ -59,12 +52,12 @@ dados %>% dunn_test(Resposta ~ Grupo, p.adjust.method = "bonferroni")
 
 # Grafico com pontos ----
 ggplot(dados, aes(x = Grupo, y = Resposta, color = Grupo)) +
-  geom_jitter(width = 0.12, size = 2.8, alpha = 0.85) +
+  geom_jitter(width = 0.01, size = 2.8, alpha = 0.85) +
+  geom_boxplot(alpha = 0.8, width = 0.6) +
   stat_summary(fun = median, geom = "point", shape = 18, size = 6,
     color = "#000000", alpha = 0.65) +
   scale_color_manual(values = paleta_okabe_ito) +
-  theme_minimal(base_size = 13) +
-  theme(legend.position = "none") +
+  theme_light(base_size = 13) +
   labs(title = "Distribuicao por grupo",
-       subtitle = "losango representa a mediana",
-       x = "grupo", y = "resposta")
+       subtitle = "Losango representa a mediana",
+       x = "Grupo", y = "Resposta")
