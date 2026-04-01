@@ -30,22 +30,9 @@ print(dados)
 
 # Dados em formato longo ----
 dados_longos <- dados %>%
-  pivot_longer(cols = -peca,
-               names_to = "metodo",
-               values_to = "resposta")
+  pivot_longer(cols = -peca, names_to = "metodo", values_to = "resposta")
 
 print(dados_longos)
-
-# Resumo estatistico ----
-dados_longos %>%
-  group_by(metodo) %>%
-  summarise(n = n(),
-            mediana = median(resposta),
-            media = mean(resposta),
-            desvio_padrao = sd(resposta),
-            minimo = min(resposta),
-            maximo = max(resposta),
-            .groups = "drop")
 
 # Teste de Friedman ----
 dados_longos %>% friedman_test(resposta ~ metodo | peca)
