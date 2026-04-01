@@ -26,13 +26,9 @@ dados <- data.frame(
   metodo_b = c(14, 15, 13, 16, 15, 14, 17, 16),
   metodo_c = c( 9, 10,  8, 11, 10,  9, 12, 11))
 
-print(dados)
-
 # Dados em formato longo ----
 dados_longos <- dados %>%
   pivot_longer(cols = -peca, names_to = "metodo", values_to = "resposta")
-
-print(dados_longos)
 
 # Teste de Friedman ----
 dados_longos %>% friedman_test(resposta ~ metodo | peca)
@@ -52,5 +48,4 @@ ggplot(dados_longos, aes(x = metodo, y = resposta, fill = metodo)) +
   scale_fill_manual(values = paleta_okabe_ito) +
   labs(title = "Resposta por metodo", subtitle = "Linhas conectam a mesma peca",
        x = "Metodo", y = "Resposta") +
-  theme_light(base_size = 13) +
-  theme(legend.position = "none")
+  theme_light(base_size = 13)
