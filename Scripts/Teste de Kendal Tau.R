@@ -17,8 +17,6 @@ dados <- data.frame(
   temperatura = c(20, 22, 25, 27, 30, 32, 35, 37, 40, 42),
   desgaste = c(5, 6, 7, 9, 10, 12, 11, 15, 16, 18))
 
-print(dados)
-
 # Teste de kendall tau ----
 # tau (τ) → força da associação
 # leitura prática:
