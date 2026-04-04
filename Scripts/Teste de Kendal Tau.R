@@ -39,11 +39,10 @@ pares <- expand.grid(i = 1:nrow(dados), j = 1:nrow(dados)) %>%
 pares %>% count(classificacao)
 
 # Calculo manual do Kendall Tau ----
-C <- sum(pares$classificacao == "Concordante")
-D <- sum(pares$classificacao == "Discordante")
-n <- nrow(dados)
-total_pares <- n * (n - 1) / 2
-tau_manual <- (C - D) / total_pares
+C <- sum(pares$classificacao == "Concordante") # soma dos concordantes
+D <- sum(pares$classificacao == "Discordante") # soma dos discordantes
+n <- nrow(dados) # total de dados
+tau_manual <- (C - D) / (n * (n - 1) / 2)
 
 # Comparacao com cor.test ----
 cor.test(dados$temperatura, dados$desgaste, method = "kendall")
