@@ -1,8 +1,9 @@
 # Teste de Associação Não-paramétrico de Kendall Tau ----
+
 # Associação monotônica (crescente ou decrescente)
-# Dados ruidosos ou com outliers
+# Dados ruidosos ou com outliers (mais robusto que Spearman e Pearson)
 # Escala ordinal ou ranking
-# Amostra pequena ----
+# Amostras pequenas
 
 # Configuracoes ----
 options(scipen = 999)
@@ -14,7 +15,7 @@ library(dplyr)
 # Dados ----
 dados <- data.frame(
   temperatura = c(20, 22, 25, 27, 30, 32, 35, 37, 40, 42),
-  desgaste    = c(5, 6, 7, 9, 10, 12, 11, 15, 16, 18))
+  desgaste    = c(5,  6,  7,  9,  10, 12, 11, 15, 16, 18))
 
 # Gerar todos os pares (i, j) ----
 pares <- expand.grid(i = 1:nrow(dados), j = 1:nrow(dados)) %>%
